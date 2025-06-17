@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <title>Chakaezba</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <div class="background-sun"></div>
+
+  <div class="avatar-wrapper">
+    <video autoplay loop muted playsinline>
+      <source src="avatar.mp4" type="video/mp4">
+      あなたのブラウザは動画をサポートしていません。
+    </video>
+  </div>
+
+  <h1 class="glitch-hover"><span id="typewriter">Chakaezba</span><span class="cursor">▌</span></h1>
+  <p>マイクラの小さなサーバーを運営するピエロ。</p>
+  <p>完全なバカ、ドジ、そして終わってる人間。</p>
+  <p>アニメと日本文化に人生を捧げたオタク。</p>
+
+
+  <a href="https://t.me/Chakaezba" target="_blank" class="heart-button">
+    TELEGRAM
+    <span class="hearts"></span>
+  </a>
+
+  <a href="https://t.me/TGKLLI" target="_blank" class="heart-button">
+    MY SERVER
+    <span class="hearts"></span>
+  </a>
+
+  <footer>
+    「空に手を伸ばせば、いつか星に届く。」
+  </footer>
+
+  <!-- 📺 Эффект старого экрана -->
+  <div class="scanlines"></div>
+
+  <script>
+    const el = document.getElementById("typewriter");
+    const firstText = "Chakaezba";
+    const secondText = "Чакаежба";
+    const delayBetween = 2000;
+    const typeDelay = 100;
+    const deleteDelay = 60;
+
+    async function typeText(text, delay) {
+      for (let i = 0; i <= text.length; i++) {
+        el.textContent = text.substring(0, i);
+        await new Promise(r => setTimeout(r, delay));
+      }
+    }
+
+    async function deleteText(delay) {
+      while (el.textContent.length > 0) {
+        el.textContent = el.textContent.substring(0, el.textContent.length - 1);
+        await new Promise(r => setTimeout(r, delay));
+      }
+    }
+
+    async function animateLoop() {
+      while (true) {
+        await typeText(firstText, typeDelay);
+        await new Promise(r => setTimeout(r, delayBetween));
+        await deleteText(deleteDelay);
+        await new Promise(r => setTimeout(r, 800));
+        await typeText(secondText, typeDelay);
+        await new Promise(r => setTimeout(r, delayBetween));
+        await deleteText(deleteDelay);
+        await new Promise(r => setTimeout(r, 800));
+      }
+    }
+
+    animateLoop();
+  </script>
+</body>
+</html>
