@@ -1,88 +1,158 @@
-<!DOCTYPE html>
-<html lang="ja">
-<head>
-  <meta charset="UTF-8">
-  <title>Chakaezba</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="style.css">
-</head>
-<body>
+body {
+  margin: 0;
+  background: radial-gradient(circle, #111 0%, #000 100%);
+  color: #00ffcc;
+  font-family: 'Press Start 2P', monospace;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  height: 100vh;
+  overflow: hidden;
+  padding-top: 60px;
+  text-align: center;
+}
 
-  <div class="background-sun"></div>
+.avatar-wrapper {
+  width: 128px;
+  height: 128px;
+  border-radius: 50%;
+  overflow: hidden;
+  border: 4px solid #ff00cc;
+  margin-bottom: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.avatar-wrapper video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
 
-  <div class="avatar-wrapper">
-    <video autoplay loop muted playsinline>
-      <source src="avatar.mp4" type="video/mp4">
-      あなたのブラウザは動画をサポートしていません。
-    </video>
-  </div>
+h1 {
+  font-size: 2em;
+  color: #ff00cc;
+  text-shadow: 2px 2px #000;
+  margin-bottom: 10px;
+}
+.cursor {
+  color: #00ffcc;
+  animation: blink 1s infinite steps(2);
+}
+.glitch-hover:hover {
+  animation: glitch 0.3s linear infinite;
+}
 
-  <h1 class="glitch-hover"><span id="typewriter">Chakaezba</span><span class="cursor">▌</span></h1>
-  <p>マイクラの小さなサーバーを運営するピエロ。</p>
-  <p>完全なバカ、ドジ、そして終わってる人間。</p>
-  <p>アニメが大好きなバカ。</p>
+p {
+  margin-top: 10px;
+  font-size: 0.8em;
+  line-height: 1.6em;
+  color: #ffffffcc;
+}
 
+a {
+  color: #00ffcc;
+  text-decoration: none;
+  display: inline-block;
+  margin-top: 20px;
+  padding: 10px 20px;
+  border: 2px solid #00ffcc;
+  border-radius: 6px;
+  transition: 0.3s;
+  position: relative;
+}
+a:hover {
+  background: #00ffcc;
+  color: #000;
+}
+.heart-button .hearts {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+}
 
-  <a href="https://t.me/Chakaezba" target="_blank" class="heart-button">
-    TELEGRAM
-    <span class="hearts"></span>
-  </a>
+footer {
+  margin-top: 30px;
+  font-size: 0.7em;
+  color: #ff99cc;
+  opacity: 0.6;
+}
 
-  <a href="https://t.me/TGKLLI" target="_blank" class="heart-button">
-    MY SERVER
-    <span class="hearts"></span>
-  </a>
+.background-sun {
+  position: fixed;
+  top: -150px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 500px;
+  height: 500px;
+  background: radial-gradient(circle, #ff0080 0%, #ff0060 30%, transparent 70%);
+  filter: blur(50px);
+  z-index: -1;
+  animation: pulse 5s infinite;
+}
 
-  <a href="https://steamcommunity.com/id/Chakaezhba/" target="_blank" class="heart-button">
-  STEAM
-  <span class="hearts"></span>
-  </a>
+.scanlines {
+  pointer-events: none;
+  position: fixed;
+  inset: 0;
+  background: repeating-linear-gradient(
+    to bottom,
+    rgba(255, 255, 255, 0.02),
+    rgba(255, 255, 255, 0.02) 2px,
+    transparent 2px,
+    transparent 4px
+  );
+  z-index: 100;
+  mix-blend-mode: overlay;
+}
 
+.glow-overlay {
+  position: fixed;
+  inset: 0;
+  background: radial-gradient(circle at center, #ffffff10 0%, transparent 70%);
+  mix-blend-mode: screen;
+  animation: flashGlow 4s infinite ease-in-out;
+  z-index: -2;
+}
 
-  <footer>
-    「空に手を伸ばせば、いつか星に届く。」
-  </footer>
+canvas#stars {
+  position: fixed;
+  inset: 0;
+  z-index: -3;
+}
 
-  
-  <div class="scanlines"></div>
+.noise-overlay {
+  position: fixed;
+  inset: 0;
+  background-image: url('noise.gif');
+  opacity: 0.03;
+  mix-blend-mode: screen;
+  pointer-events: none;
+  z-index: 101;
+}
 
-  <script>
-    const el = document.getElementById("typewriter");
-    const firstText = "Chakaezba";
-    const secondText = "Чакаежба";
-    const delayBetween = 2000;
-    const typeDelay = 100;
-    const deleteDelay = 60;
-
-    async function typeText(text, delay) {
-      for (let i = 0; i <= text.length; i++) {
-        el.textContent = text.substring(0, i);
-        await new Promise(r => setTimeout(r, delay));
-      }
-    }
-
-    async function deleteText(delay) {
-      while (el.textContent.length > 0) {
-        el.textContent = el.textContent.substring(0, el.textContent.length - 1);
-        await new Promise(r => setTimeout(r, delay));
-      }
-    }
-
-    async function animateLoop() {
-      while (true) {
-        await typeText(firstText, typeDelay);
-        await new Promise(r => setTimeout(r, delayBetween));
-        await deleteText(deleteDelay);
-        await new Promise(r => setTimeout(r, 800));
-        await typeText(secondText, typeDelay);
-        await new Promise(r => setTimeout(r, delayBetween));
-        await deleteText(deleteDelay);
-        await new Promise(r => setTimeout(r, 800));
-      }
-    }
-
-    animateLoop();
-  </script>
-</body>
-</html>
+/* Анимации */
+@keyframes blink {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0; }
+}
+@keyframes pulse {
+  0%, 100% { transform: translateX(-50%) scale(1); }
+  50% { transform: translateX(-50%) scale(1.05); }
+}
+@keyframes flashGlow {
+  0%, 100% { opacity: 0.3; }
+  50% { opacity: 0.6; }
+}
+@keyframes glitch {
+  0% { transform: translate(0); }
+  20% { transform: translate(-1px, 1px); }
+  40% { transform: translate(-2px, -1px); }
+  60% { transform: translate(2px, 1px); }
+  80% { transform: translate(1px, -1px); }
+  100% { transform: translate(0); }
+}
